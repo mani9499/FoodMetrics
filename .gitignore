@@ -1,0 +1,31 @@
+# === Frontend ===
+FoodMetrics/node_modules/
+FoodMetrics/.env
+FoodMetrics/.env.local
+FoodMetrics/dist/
+FoodMetrics/build/
+
+# === Backend ===
+foodmetrics-backend/node_modules/
+foodmetrics-backend/.env
+foodmetrics-backend/.env.local
+foodmetrics-backend/dist/
+
+# === Logs ===
+**/logs/
+**/*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# === OS files ===
+.DS_Store
+Thumbs.db
+
+# === Editor settings ===
+.vscode/
+.idea/
+
+# === Dependency locks (optional if you want to ignore some) ===
+# FoodMetrics/package-lock.json
+# foodmetrics-backend/yarn.lock

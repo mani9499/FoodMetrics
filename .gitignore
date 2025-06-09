@@ -11,21 +11,17 @@ foodmetrics-backend/.env
 foodmetrics-backend/.env.local
 foodmetrics-backend/dist/
 
-# === Logs ===
+
 **/logs/
 **/*.log
 npm-debug.log*
 yarn-debug.log*
 pnpm-debug.log*
 
-# === OS files ===
+
 .DS_Store
 Thumbs.db
 
-# === Editor settings ===
 .vscode/
 .idea/
 
-# === Dependency locks (optional if you want to ignore some) ===
-# FoodMetrics/package-lock.json
-# foodmetrics-backend/yarn.lock

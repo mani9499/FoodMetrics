@@ -18,7 +18,7 @@ function Calorie_Meter({ goal, value }) {
   return (
     <div className="meter-container">
       <br />
-      <svg viewBox="0 0 200 110" className="arc-meter">
+      <svg viewBox="0 0 200 120" className="arc-meter">
         <path
           d="M 10 100 A 90 90 0 0 1 190 100"
           fill="none"

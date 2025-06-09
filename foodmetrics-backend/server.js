@@ -5,6 +5,7 @@ import connectDb from "./config/connectDb.js";
 import FoodItem from "./models/food_items.js";
 import users from "./models/users.js";
 import Order from "./models/orders.js";
+import mongoose from "mongoose";
 const app = express();
 app.use(cors());
 dotenv.config();
@@ -29,12 +30,29 @@ app.post("/food_items", async (req, res) => {
       .json({ message: "failed in adding item", error: error.message });
   }
 });
+
 app.get("/food_items", async (req, res) => {
   try {
     const food_itemsList = await FoodItem.find();
     res.status(201).json(food_itemsList);
   } catch (error) {
     res.status(500).json({ message: "Error fetching", error: error.message });
+  }
+});
+
+app.post("/foods", async (req, res) => {
+  const { ids } = req.body;
+  console.log("Received IDs:", ids);
+
+  try {
+    const objectIds = ids.map((id) => new mongoose.Types.ObjectId(id));
+    const foodItems = await FoodItem.find({ _id: { $in: objectIds } });
+    res.status(200).json(foodItems);
+  } catch (error) {
+    res.status(500).json({
+      message: "Error fetching food items",
+      error: error.message,
+    });
   }
 });
 app.post("/register", async (req, res) => {

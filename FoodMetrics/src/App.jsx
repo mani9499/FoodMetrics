@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Cart from "./components/Cart";
+import Orders from "./components/Orders";
+import Profile from "./components/Profile";
 import {
   BrowserRouter as Router,
   Routes,
@@ -25,6 +27,8 @@ function AppWrapper() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/cart" element={<Cart />} />
+      <Route path="/orders" element={<Orders />} />
+      <Route path="/profile" element={<Profile />} />
     </Routes>
   );
 }

@@ -1,0 +1,121 @@
+.login-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  height: 100vh;
+  background-color: rgb(35, 6, 91);
+}
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(18, 108, 203);
+  padding: 20px;
+  border-radius: 10px;
+}
+.additional-inputs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-form input {
+  margin: 5px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.login-form button {
+  margin: 5px;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: #4caf50;
+  color: white;
+  cursor: pointer;
+}
+
+.ri-eye-off-line,
+.ri-eye-line {
+  font-size: 20px;
+  color: rgb(53, 53, 53);
+  cursor: pointer;
+  position: absolute;
+  translate: -120% 50%;
+}
+.login-form .inactive {
+  font-size: medium;
+  background-color: transparent;
+  border: none;
+}
+.website-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: rgb(35, 6, 91);
+}
+.website-intro .intro {
+  font-size: 1.8rem;
+  color: #f8f8f8;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  animation: fadeIn 2s ease-in-out forwards;
+}
+.website-intro p {
+  text-align: center;
+  font-size: 1rem;
+  color: #f8f8f8;
+  margin-top: 10px;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    width: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+    width: 100%;
+  }
+}
+.loginlogo {
+  mix-blend-mode: lighten;
+  max-width: 200px;
+  max-height: 200px;
+  filter: invert(1);
+  animation: logoFadeIn 2s ease-in-out;
+}
+@keyframes logoFadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@media screen and (max-width: 768px) {
+  .login-container {
+    flex-direction: column;
+    justify-content: center;
+  }
+  .login-form {
+    width: 90%;
+    padding: 15px;
+  }
+  .website-intro {
+    width: 90%;
+    padding: 15px;
+  }
+  .loginlogo {
+    max-width: 150px;
+    max-height: 150px;
+  }
+}

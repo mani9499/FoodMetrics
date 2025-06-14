@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "./Login.css";
+import Logo from "../assets/logo.png";
 export default function Login() {
   const [loginusername, setloginUsername] = useState("");
   const [loginpassword, setloginPassword] = useState("");
@@ -58,19 +60,8 @@ export default function Login() {
 
   return (
     <div className="login-container">
-      <center>
-        <h2>FOOD-METRICS</h2>
-      </center>
       <div className="login-form">
-        <button
-          type="button"
-          onClick={() => {
-            setIsLogin(!isLogin);
-          }}
-          className="inactive"
-        >
-          {!isLogin ? "Existing User" : "New User"}
-        </button>
+        <h2>FoodMetrics</h2>
         <input
           type="text"
           placeholder="Enter Email"
@@ -122,6 +113,21 @@ export default function Login() {
         <button type="submit" onClick={handlesubmit}>
           {isLogin ? "Login" : "Register"}
         </button>
+        <button
+          onClick={() => {
+            setIsLogin(!isLogin);
+          }}
+          className="inactive"
+        >
+          {!isLogin ? "Have an account? Login" : "New? Create an account"}
+        </button>
+      </div>
+      <div className="website-intro">
+        <img className="loginlogo" src={Logo} />
+        <span className="intro">Hello, Welcome to FoodMetrics!</span>
+        <p className="intro-subtext">
+          Track your meals. Monitor your health. Live better.
+        </p>
       </div>
     </div>
   );

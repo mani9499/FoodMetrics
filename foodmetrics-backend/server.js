@@ -115,6 +115,115 @@ app.get("/orders/:username", async (req, res) => {
       .json({ message: "Error in fetching orders", error: error.message });
   }
 });
+app.post("/calories-by-date", async (req, res) => {
+  const orderIdsByDate = req.body.orderIdsByDate;
+
+  try {
+    const result = {};
+
+    for (const [date, orderIds] of Object.entries(orderIdsByDate)) {
+      const objectIds = orderIds.map((id) => new mongoose.Types.ObjectId(id));
+
+      const orders = await Order.find({ _id: { $in: objectIds } });
+
+      let totalCalories = 0;
+
+      for (const order of orders) {
+        for (const item of order.foodItems) {
+          const food = await FoodItem.findById(item.foodId);
+          if (food) {
+            totalCalories += food.calories * item.quantity;
+          }
+        }
+      }
+
+      result[date] = totalCalories;
+    }
+
+    res.status(200).json(result);
+  } catch (error) {
+    console.error("Error calculating calories:", error);
+    res.status(500).json({
+      message: "Error calculating calories",
+      error: error.message,
+    });
+  }
+});
+// POST /calories-by-week
+app.post("/calories-by-week", async (req, res) => {
+  const { orderIdsByWeek } = req.body;
+  try {
+    const result = {};
+
+    for (const week in orderIdsByWeek) {
+      const orderIds = orderIdsByWeek[week];
+      const orders = await Order.find({ _id: { $in: orderIds } });
+      const foodIds = orders.flatMap((o) =>
+        o.foodItems.map((f) => f.foodId.toString())
+      );
+      const foods = await FoodItem.find({ _id: { $in: foodIds } });
+
+      const foodMap = {};
+      foods.forEach((f) => {
+        foodMap[f._id.toString()] = f.calories;
+      });
+
+      let total = 0;
+      orders.forEach((order) => {
+        order.foodItems.forEach((f) => {
+          total += (foodMap[f.foodId.toString()] || 0) * f.quantity;
+        });
+      });
+
+      result[week] = total;
+    }
+
+    res.status(200).json(result);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Failed to calculate calories", error: error.message });
+  }
+});
+app.post("/calories-by-month", async (req, res) => {
+  const { orderIdsByMonth } = req.body;
+
+  const result = {};
+  try {
+    for (const month in orderIdsByMonth) {
+      const orders = await Order.find({
+        _id: { $in: orderIdsByMonth[month] },
+      }).populate("foodItems.foodId"); // Assuming foodItems has calories
+
+      let totalCalories = 0;
+      for (const order of orders) {
+        for (const item of order.foodItems) {
+          const calories = item.foodId?.calories || 0;
+          const quantity = item.quantity || 1;
+
+          if (typeof calories !== "number") {
+            console.warn("Missing or invalid calories for item:", item);
+          }
+
+          totalCalories += calories * quantity;
+        }
+      }
+
+      result[month] = totalCalories;
+    }
+
+    console.log("Calories sent to client:", result); // ✅ log here
+
+    res.status(200).json(result);
+  } catch (error) {
+    console.error("Server error:", error); // optional additional log
+    res.status(500).json({
+      message: "Error calculating monthly calories",
+      error: error.message,
+    });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server running successfully at http://localhost:${port}`);
 });

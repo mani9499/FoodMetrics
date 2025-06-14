@@ -83,6 +83,13 @@ function Orders() {
         <span>Back</span>
       </button>
       <div className="orders-container">
+        <div className="order-headings">
+          <p>Order No.</p>
+          <p>Date</p>
+          <p className="status">Status</p>
+          <p>Quantity</p>
+          <p className="Total">Total Price</p>
+        </div>
         {orders.length === 0 ? (
           <p>No orders found.</p>
         ) : (

@@ -81,14 +81,9 @@ header {
   max-height: 125px;
   mix-blend-mode: multiply;
 }
-.login-container {
-  background-color: rgb(0, 85, 255);
-  padding: 50px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  translate: -50% -50%;
-  border-radius: 10px;
+.icon-label {
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 .hero-section {
   display: flex;
@@ -182,16 +177,15 @@ header {
   max-width: 350px;
   padding: 10px;
   font-size: large;
-  border: solid 4px #5f5f5f56;
+  border: solid 5px #8382816a;
   border-radius: 15px;
-  background-color: rgb(232, 231, 230);
+  background-color: rgba(235, 235, 235, 0.77);
   transition: all ease-in-out 0.2s;
   cursor: pointer;
   animation: fadeInUp 0.6s ease forwards;
   animation-timeline: view();
-  animation-range: entry 33%;
+  animation-range: entry 35%;
   animation-fill-mode: alterate;
-  animation-delay: 0.3s;
   opacity: 0;
 }
 @keyframes fadeInUp {
@@ -216,19 +210,20 @@ header {
 .Food-Card:hover {
   transform: scale(0.95);
 }
+
 .category {
   position: absolute;
   margin: 10px;
   padding: 3px;
   border-radius: 5px;
-  background-color: #ffffffaa;
-  color: rgb(25, 22, 195);
+  background-color: #d5d5d598;
+  color: rgba(50, 50, 50, 0.992);
   font-size: medium;
   font-weight: bold;
 }
 .Food-Card:hover .FoodImage {
   transition: all 0.4s ease-in-out;
-  opacity: 0.55;
+  opacity: 0.19;
 }
 .FoodImage {
   width: 350px;
@@ -269,7 +264,7 @@ header {
 .meter-value {
   position: relative;
   text-align: center;
-  transform: translateY(-200%);
+  transform: translateY(-250%);
   font-weight: bold;
   color: #000000;
   font-size: 1em;
@@ -278,8 +273,10 @@ header {
   width: 100%;
 }
 .cart {
-  background-color: #cab8b8;
-  height: 100%;
+  box-sizing: border-box;
+  padding-top: 20px;
+  background-color: #f9f6d8;
+  height: 100vh;
 }
 .current-orders {
   min-width: 65%;
@@ -333,7 +330,14 @@ header {
   font-size: large;
   color: #bb0651;
 }
-
+.order-headings {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: large;
+  gap: 20px;
+  width: 100%;
+}
 .order-details h3 {
   margin: 0;
   font-size: 1rem;
@@ -433,56 +437,6 @@ header {
   text-align: end;
   width: 100%;
   color: rgb(51, 51, 51);
-}
-.login-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.additional-inputs {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.login-form input {
-  margin: 5px;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-.login-form button {
-  margin: 5px;
-  padding: 10px;
-  border-radius: 5px;
-  border: none;
-  background-color: #4caf50;
-  color: white;
-  cursor: pointer;
-}
-.login-form .inactive:hover {
-  color: rgb(221, 170, 17);
-  transform: scale(1.1);
-  transition: all 0.3s ease-in-out;
-}
-.login-form .inactive {
-  border: none;
-  background-color: inherit;
-  font-weight: bold;
-}
-.ri-eye-off-line,
-.ri-eye-line {
-  font-size: 20px;
-  color: rgb(53, 53, 53);
-  cursor: pointer;
-  position: absolute;
-  translate: -120% 50%;
-}
-.icon-label {
-  display: inline-flex;
-  padding-top: 20px;
-  gap: 6px;
-  font-size: 1.5rem;
-  font-weight: bold;
 }
 
 @media (max-width: 600px) {

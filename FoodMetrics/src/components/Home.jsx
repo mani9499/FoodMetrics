@@ -48,7 +48,8 @@ export default function Home() {
           <i class="ri-shopping-cart-fill"></i>cart
         </button>
         <button>
-          <i class="ri-speed-up-line"></i>Meter
+          <i class="ri-speed-up-line" onClick={() => navigate("/cart")}></i>
+          Meter
         </button>
         <button onClick={() => navigate("/profile")}>
           <i class="ri-user-settings-fill"></i>profile

@@ -6,7 +6,7 @@
 .profile-head {
   position: fixed;
   top: 0;
-  right: 0px;
+  left: 10px;
 }
 .ri-user-3-fill {
   font-size: 2rem;
@@ -17,11 +17,39 @@
   align-items: center;
   justify-content: space-evenly;
 }
-.Analysis button {
+
+.active {
   border: none;
   font-size: large;
+  cursor: pointer;
+  scale: 1.1;
+  border-radius: 10px;
+  padding: 5px 10px;
   background-color: brown;
+  color: white;
+}
+.inactive {
+  border: none;
+  font-size: large;
+  background-color: rgb(68, 68, 68);
+  cursor: pointer;
   border-radius: 10px;
   color: white;
   padding: 5px 10px;
+}
+.monthly-container {
+  background-color: rgb(185, 185, 185);
+}
+.Analysis-content {
+  width: 100vw;
+}
+.logout-btn {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: rgb(68, 68, 68);
+  cursor: pointer;
 }

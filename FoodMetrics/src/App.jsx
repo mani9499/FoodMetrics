@@ -4,6 +4,10 @@ import Login from "./components/Login";
 import Cart from "./components/Cart";
 import Orders from "./components/Orders";
 import Profile from "./components/Profile";
+import Daily from "./components/Daily";
+import Weekly from "./components/Weekly";
+import Monthly from "./components/Monthly";
+import Yearly from "./components/Yearly";
 import {
   BrowserRouter as Router,
   Routes,

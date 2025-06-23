@@ -7,7 +7,13 @@ import users from "./models/users.js";
 import Order from "./models/orders.js";
 import mongoose from "mongoose";
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://food-metrics-a3fsh7zgq-mani9499s-projects.vercel.app",
+    credentials: true,
+  })
+);
+
 dotenv.config();
 app.use(express.json());
 connectDb();

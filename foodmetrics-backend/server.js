@@ -70,15 +70,12 @@ app.post("/register", async (req, res) => {
   }
 });
 app.post("/login", async (req, res) => {
-  const { email, password } = req.body;
-
+  const { username, password } = req.body;
   try {
-    const user = await users.findOne({ email, password });
-
+    const user = await users.findOne({ email: username, password });
     if (!user) {
-      return res.status(401).json({ message: "Invalid email or password" });
+      return res.status(401).json({ message: "No user found" });
     }
-
     res.status(200).json({
       message: "Login successful",
       user,

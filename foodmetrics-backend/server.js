@@ -7,9 +7,24 @@ import users from "./models/users.js";
 import Order from "./models/orders.js";
 import mongoose from "mongoose";
 const app = express();
+const allowedOrigins = [
+  "https://food-metrics.vercel.app", // main production domain
+];
+
 app.use(
   cors({
-    origin: "https://food-metrics.vercel.app",
+    origin: function (origin, callback) {
+      // Allow main site + all vercel preview domains
+      if (
+        !origin ||
+        allowedOrigins.includes(origin) ||
+        /^https:\/\/food-metrics-[\w-]+\.vercel\.app$/.test(origin)
+      ) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS: " + origin));
+      }
+    },
     credentials: true,
   })
 );

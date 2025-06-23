@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Calorie_Meter from "./Calorie_Meter";
-
+import { useNotify } from "../context/NotifyContext";
 import axios from "axios";
 
 function Cart() {
+  const { showNotify } = useNotify();
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalQuantity, setQuantity] = useState(0);
@@ -38,7 +39,7 @@ function Cart() {
     }));
 
     if (totalQuantity == 0) {
-      alert("Nothing to order");
+      showNotify("Nothing to order");
       return;
     }
 
@@ -54,21 +55,21 @@ function Cart() {
       );
 
       if (response.status === 201) {
-        alert("Order placed successfully!");
+        showNotify("Order placed successfully!");
         localStorage.removeItem("cartItems");
         setCartItems([]);
         setTotalPrice(0);
         setQuantity(0);
         navigate("/orders");
       } else {
-        alert("Order failed. Try again.");
+        showNotify("Order failed. Try again.");
       }
     } catch (error) {
       console.error(
         "Error placing the order:",
         error.response || error.message
       );
-      alert("Something went wrong. Please try again.");
+      showNotify("Something went wrong. Please try again.");
     }
   };
 

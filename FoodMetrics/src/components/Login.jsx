@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
+import { useNotify } from "../context/NotifyContext";
 import Logo from "../assets/logo.png";
 export default function Login() {
+  const { showNotify } = useNotify();
   const [loginusername, setloginUsername] = useState("");
   const [loginpassword, setloginPassword] = useState("");
   const [username, setUsername] = useState("");
@@ -27,13 +29,14 @@ export default function Login() {
             localStorage.setItem("email", user.email);
             console.log(localStorage.getItem("name"), message);
             navigate("/");
+            showNotify("Login successful!");
           } else {
-            alert("Invalid credentials");
+            showNotify("Invalid credentials, please try again.");
           }
         })
         .catch((error) => {
           console.error("Error during login:", error);
-          alert("Invalid credentials");
+          showNotify("Invalid credentials, please try again.");
         });
     } else {
       axios
@@ -45,15 +48,15 @@ export default function Login() {
         })
         .then((response) => {
           if (response.status === 201) {
-            alert("Registration successful, please login.");
+            showNotify("Registration successful, please login.");
             setIsLogin(true);
           } else {
-            alert("Registration failed");
+            showNotify("Registration failed");
           }
         })
         .catch((error) => {
           console.error("Error during registration:", error);
-          alert("Registration failed");
+          showNotify("Registration failed");
         });
     }
   };
@@ -124,7 +127,9 @@ export default function Login() {
       </div>
       <div className="website-intro">
         <img className="loginlogo" src={Logo} />
-        <span className="intro">Hello, Welcome to FoodMetrics!</span>
+        <center>
+          <span className="intro">Hello, Welcome to FoodMetrics!</span>
+        </center>
         <p className="intro-subtext">
           Track your meals. Monitor your health. Live better.
         </p>

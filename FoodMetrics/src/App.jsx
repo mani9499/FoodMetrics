@@ -1,4 +1,11 @@
 import React, { useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+} from "react-router-dom";
+
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Cart from "./components/Cart";
@@ -8,15 +15,13 @@ import Daily from "./components/Daily";
 import Weekly from "./components/Weekly";
 import Monthly from "./components/Monthly";
 import Yearly from "./components/Yearly";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useNavigate,
-} from "react-router-dom";
+
+import { NotifyProvider } from "./context/NotifyContext";
+import Notify from "./components/Notify";
+
 import "./App.css";
 
-function AppWrapper() {
+function AppRoutes() {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,14 +38,21 @@ function AppWrapper() {
       <Route path="/cart" element={<Cart />} />
       <Route path="/orders" element={<Orders />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/daily" element={<Daily />} />
+      <Route path="/weekly" element={<Weekly />} />
+      <Route path="/monthly" element={<Monthly />} />
+      <Route path="/yearly" element={<Yearly />} />
     </Routes>
   );
 }
 
 export default function App() {
   return (
-    <Router>
-      <AppWrapper />
-    </Router>
+    <NotifyProvider>
+      <Router>
+        <Notify />
+        <AppRoutes />
+      </Router>
+    </NotifyProvider>
   );
 }

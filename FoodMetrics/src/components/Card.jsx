@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Calorie_Meter from "./Calorie_Meter";
+import { useNotify } from "../context/NotifyContext"; // ✅ import context
 
 function Card({
   id = "unKnown",
@@ -8,10 +9,11 @@ function Card({
   price = "0",
   imageUrl = "https://via.placeholder.com/150",
   calories = "0",
-  setNotify,
 }) {
   const [isHover, setIsHover] = useState(false);
   const [quantity, setQuantity] = useState(1);
+  const { showNotify } = useNotify(); // ✅ use notifier
+
   const countInc = () => {
     setQuantity((prev) => prev + 1);
   };
@@ -33,7 +35,7 @@ function Card({
       cartItems[existingIndex].quantity += parsedQuantity;
     } else {
       cartItems.push({
-        id: id,
+        id,
         food_name,
         category,
         price,
@@ -44,8 +46,7 @@ function Card({
     }
 
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    setNotify(`${food_name} added to cart`);
-
+    showNotify(`${food_name} added to cart`); // ✅ show notification
     setQuantity(1);
   };
 
@@ -64,7 +65,7 @@ function Card({
       </div>
       <p>{food_name}</p>
       <div className="food-info">
-        <span className="price">{"₹" + price + " /-"}</span>
+        <span className="price">₹{price} /-</span>
         <div className="count">
           <div className="count-buttons">
             <button className="decrease" onClick={countDec}>

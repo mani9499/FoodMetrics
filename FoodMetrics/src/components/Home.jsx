@@ -3,71 +3,79 @@ import logo from "../assets/logo.png";
 import Card from "./Card";
 import { useNavigate } from "react-router-dom";
 import Notify from "./Notify";
+import { useNotify } from "../context/NotifyContext"; // ✅ context hook
+
 const API_URL = import.meta.env.VITE_API_URL;
+
 export default function Home() {
   const [food_itemList, setFoodList] = useState([]);
   const [filter, setFilter] = useState("All");
-  const [notify, setNotify] = useState("");
+  const { showNotify } = useNotify(); // ✅ access context
+  const navigate = useNavigate();
+
   useEffect(() => {
     fetch(`${API_URL}/food_items`)
       .then((response) => response.json())
       .then((data) => setFoodList(data))
-      .catch((error) => console.error("error while fetching", error));
+      .catch((error) => {
+        console.error("Error while fetching:", error);
+        showNotify("Failed to fetch food items 😥");
+      });
   }, []);
-  const filteredFoodItems = food_itemList.filter((item) =>
-    filter === "All" ? food_itemList : item.category === filter
-  );
+
+  const filteredFoodItems =
+    filter === "All"
+      ? food_itemList
+      : food_itemList.filter((item) => item.category === filter);
+
   const handleFilter = (category) => {
     setFilter(category);
   };
-  useEffect(() => {
-    if (notify) {
-      const timer = setTimeout(() => {
-        setNotify("");
-      }, 6000);
 
-      return () => clearTimeout(timer);
-    }
-  }, [notify]);
-
-  const navigate = useNavigate();
   return (
     <div className="container">
+      {/* ✅ Global Notification */}
+      <Notify />
+
       <header>
         <div className="logo">
           <img src={logo} alt="Logo" />
           <h2>FoodMetrics</h2>
         </div>
-        {notify && <Notify message={notify} />}
       </header>
+
       <div className="hero-section">
         <button onClick={() => navigate("/orders")}>
-          <i class="ri-restaurant-line"></i>My orders
+          <i className="ri-restaurant-line"></i> My orders
         </button>
         <button className="cart-button" onClick={() => navigate("/cart")}>
-          <i class="ri-shopping-cart-fill"></i>cart
+          <i className="ri-shopping-cart-fill"></i> Cart
         </button>
-        <button>
-          <i class="ri-speed-up-line" onClick={() => navigate("/cart")}></i>
-          Meter
+        <button onClick={() => navigate("/cart")}>
+          <i className="ri-speed-up-line"></i> Meter
         </button>
         <button onClick={() => navigate("/profile")}>
-          <i class="ri-user-settings-fill"></i>profile
+          <i className="ri-user-settings-fill"></i> Profile
         </button>
       </div>
 
       <div className="Filter-section">
         <button>
-          <i className="ri-filter-line"></i>
-          {filter}
+          <i className="ri-filter-line"></i> {filter}
         </button>
         <ul className="Filter-content">
-          <li onClick={() => handleFilter("All")}>All</li>
-          <li onClick={() => handleFilter("Vegetarian")}>Vegetarian</li>
-          <li onClick={() => handleFilter("Non-Vegetarian")}>Non-Vegetarian</li>
-          <li onClick={() => handleFilter("Vegan")}>Vegan</li>
-          <li onClick={() => handleFilter("Dessert")}>Dessert</li>
-          <li onClick={() => handleFilter("Beverage")}>Beverage</li>
+          {[
+            "All",
+            "Vegetarian",
+            "Non-Vegetarian",
+            "Vegan",
+            "Dessert",
+            "Beverage",
+          ].map((cat) => (
+            <li key={cat} onClick={() => handleFilter(cat)}>
+              {cat}
+            </li>
+          ))}
         </ul>
       </div>
 
@@ -81,7 +89,6 @@ export default function Home() {
             price={item.price}
             imageUrl={item.imageUrl}
             calories={item.calories}
-            setNotify={setNotify}
           />
         ))}
       </div>

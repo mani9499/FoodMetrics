@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 dotenv.config();
 const connectDb = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI, foodmetrics);
+    await mongoose.connect(process.env.MONGO_URI, { dbName: "foodmetrics" });
     console.log("Successful Connection");
   } catch (e) {
     console.log(e.message);

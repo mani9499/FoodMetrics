@@ -9,7 +9,7 @@ import mongoose from "mongoose";
 const app = express();
 app.use(
   cors({
-    origin: "https://food-metrics-r8fqfqgc4-mani9499s-projects.vercel.app",
+    origin: "https://food-metrics.vercel.app",
     credentials: true,
   })
 );

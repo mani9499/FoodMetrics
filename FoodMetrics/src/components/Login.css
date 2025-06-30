@@ -114,6 +114,9 @@
     width: 90%;
     padding: 15px;
   }
+  .website-intro .intro {
+    font-size: 1.4rem;
+  }
   .loginlogo {
     max-width: 150px;
     max-height: 150px;

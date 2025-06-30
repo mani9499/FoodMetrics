@@ -185,7 +185,7 @@ header {
   cursor: pointer;
   animation: fadeInUp 0.6s ease forwards;
   animation-timeline: view();
-  animation-range: entry 35%;
+  animation-range: entry 30%;
   animation-fill-mode: alterate;
   opacity: 0;
 }
@@ -227,8 +227,8 @@ header {
   opacity: 0.19;
 }
 .FoodImage {
-  width: 350px;
-  height: 200px;
+  width: 100%;
+  aspect-ratio: 7 / 4;
   object-fit: cover;
   border-radius: 10px;
 }

@@ -480,4 +480,8 @@ header {
     align-items: unset;
     margin: 0 2%;
   }
+  .FoodImage {
+    width: 100%;
+    height: 100%;
+  }
 }

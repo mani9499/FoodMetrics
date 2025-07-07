@@ -3,14 +3,14 @@ import logo from "../assets/logo.png";
 import Card from "./Card";
 import { useNavigate } from "react-router-dom";
 import Notify from "./Notify";
-import { useNotify } from "../context/NotifyContext"; // ✅ context hook
+import { useNotify } from "../context/NotifyContext";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Home() {
   const [food_itemList, setFoodList] = useState([]);
   const [filter, setFilter] = useState("All");
-  const { showNotify } = useNotify(); // ✅ access context
+  const { showNotify } = useNotify();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,7 +34,6 @@ export default function Home() {
 
   return (
     <div className="container">
-      {/* ✅ Global Notification */}
       <Notify />
 
       <header>

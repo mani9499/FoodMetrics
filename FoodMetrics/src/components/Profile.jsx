@@ -16,7 +16,8 @@ function Profile() {
       <button
         className="logout-btn"
         onClick={() => {
-          localStorage.removeItem("username");
+          localStorage.removeItem("email");
+          localStorage.removeItem("name");
           navigate("/login");
         }}
       >

@@ -8,8 +8,7 @@ import Order from "./models/orders.js";
 import mongoose from "mongoose";
 const app = express();
 const allowedOrigins = [
-  "https://food-metrics.vercel.app",
-  "http://localhost:5173",
+  "https://food-metrics.vercel.app", // main production domain
 ];
 
 app.use(

@@ -59,27 +59,26 @@ export default function Home() {
         </button>
       </div>
 
-      <div className="Filter-section">
-        <button>
-          <i className="ri-filter-line"></i> {filter}
-        </button>
-        <ul className="Filter-content">
-          {[
-            "All",
-            "Vegetarian",
-            "Non-Vegetarian",
-            "Vegan",
-            "Dessert",
-            "Beverage",
-          ].map((cat) => (
-            <li key={cat} onClick={() => handleFilter(cat)}>
-              {cat}
-            </li>
-          ))}
-        </ul>
-      </div>
-
       <div className="Card-Container">
+        <div className="Filter-section">
+          <button>
+            <i className="ri-filter-line"></i> {filter}
+          </button>
+          <ul className="Filter-content">
+            {[
+              "All",
+              "Vegetarian",
+              "Non-Vegetarian",
+              "Vegan",
+              "Dessert",
+              "Beverage",
+            ].map((cat) => (
+              <li key={cat} onClick={() => handleFilter(cat)}>
+                {cat}
+              </li>
+            ))}
+          </ul>
+        </div>
         {filteredFoodItems.map((item, index) => (
           <Card
             key={index}

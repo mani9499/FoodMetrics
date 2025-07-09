@@ -12,23 +12,24 @@ const allowedOrigins = [
   "http://localhost:5173",
 ];
 
+const cors = require('cors');
+
+
+// Add this before your routes:
 app.use(
   cors({
     origin: function (origin, callback) {
-      // Allow main site + all vercel preview domains
-      if (
-        !origin ||
-        allowedOrigins.includes(origin) ||
-        /^https:\/\/food-metrics-[\w-]+\.vercel\.app$/.test(origin)
-      ) {
+      console.log('Request origin:', origin);
+      if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
-        callback(new Error("Not allowed by CORS: " + origin));
+        callback(new Error('Not allowed by CORS'));
       }
     },
-    credentials: true,
+    credentials: true,  
   })
 );
+
 
 dotenv.config();
 app.use(express.json());

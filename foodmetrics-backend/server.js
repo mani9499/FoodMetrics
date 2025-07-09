@@ -14,21 +14,20 @@ const allowedOrigins = [
 
 const cors = require('cors');
 
-
-// Add this before your routes:
 app.use(
   cors({
     origin: function (origin, callback) {
-      console.log('Request origin:', origin);
+      console.log('Request Origin:', origin);
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
         callback(new Error('Not allowed by CORS'));
       }
     },
-    credentials: true,  
+    credentials: true
   })
 );
+
 
 
 dotenv.config();

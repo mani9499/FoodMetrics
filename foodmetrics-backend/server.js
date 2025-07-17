@@ -8,7 +8,7 @@ import Order from "./models/orders.js";
 import mongoose from "mongoose";
 const app = express();
 app.use(cors({
-  origin: 'https://your-frontend-domain.com'
+  origin: 'https://food-metrics.vercel.app'
 }));
 
 

@@ -7,25 +7,9 @@ import users from "./models/users.js";
 import Order from "./models/orders.js";
 import mongoose from "mongoose";
 const app = express();
-const allowedOrigins = [
-  "https://food-metrics.vercel.app",
-  "http://localhost:5173",
-];
-
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      console.log('Request Origin:', origin);
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
-    credentials: true
-  })
-);
-
+app.use(cors({
+  origin: 'https://your-frontend-domain.com'
+}));
 
 
 dotenv.config();

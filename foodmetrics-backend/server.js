@@ -93,7 +93,6 @@ app.post("/register", async (req, res) => {
 });
 app.post("/login", async (req, res) => {
   const authHeader = req.headers.authorization;
-
   if (authHeader && authHeader.startsWith("Bearer ")) {
     const token = authHeader.split(" ")[1];
 
@@ -107,27 +106,36 @@ app.post("/login", async (req, res) => {
 
   const { username, password } = req.body;
 
+  if (!username || !password) {
+    return res.status(400).json({ message: "Username and password are required" });
+  }
+
   try {
     const user = await users.findOne({ email: username, password });
+
     if (!user) {
-      return res.status(401).json({ message: "No user found" });
+      return res.status(401).json({ message: "Invalid username or password" });
     }
 
-    const ip =
-      req.ip || req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+    const ip = req.ip || req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
     const token = jwt.sign({ id: user._id, ip }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
 
+    const { password: pwd, ...safeUser } = user._doc || user;
+
     res.status(200).json({
       message: "Login successful",
       token,
-      user,
+      user: safeUser,
     });
   } catch (error) {
+    console.error("Login error:", error.message);
     res.status(500).json({ message: "Error in login", error: error.message });
   }
 });
+
 
 app.post("/orders", async (req, res) => {
   const { foodItems, username, totalPrice, quantity } = req.body;

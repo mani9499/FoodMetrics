@@ -24,13 +24,6 @@ import "./App.css";
 function AppRoutes() {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const email = localStorage.getItem("email");
-    if (!email) {
-      navigate("/login");
-    }
-  }, [navigate]);
-
   return (
     <Routes>
       <Route path="/" element={<Home />} />

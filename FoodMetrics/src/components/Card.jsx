@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Calorie_Meter from "./Calorie_Meter";
-import { useNotify } from "../context/NotifyContext"; // ✅ import context
+import { useNotify } from "../context/NotifyContext";
 
 function Card({
   id = "unKnown",
@@ -12,7 +12,7 @@ function Card({
 }) {
   const [isHover, setIsHover] = useState(false);
   const [quantity, setQuantity] = useState(1);
-  const { showNotify } = useNotify(); // ✅ use notifier
+  const { showNotify } = useNotify();
 
   const countInc = () => {
     setQuantity((prev) => prev + 1);
@@ -46,7 +46,7 @@ function Card({
     }
 
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    showNotify(`${food_name} added to cart`); // ✅ show notification
+    showNotify(`${food_name} added to cart`);
     setQuantity(1);
   };
 
@@ -59,25 +59,27 @@ function Card({
       <div className="Food-Image-container">
         <img src={imageUrl} alt="Food" className="FoodImage" />
         <span className="category">{category}</span>
-      </div>
-      <div className="meter" style={{ display: isHover ? "block" : "none" }}>
-        <Calorie_Meter value={calories} goal={800} />
-      </div>
-      <p>{food_name}</p>
-      <div className="food-info">
-        <span className="price">₹{price} /-</span>
-        <div className="count">
-          <div className="count-buttons">
-            <button className="decrease" onClick={countDec}>
-              -
-            </button>
-            <span className="count-value">{quantity}</span>
-            <button className="increase" onClick={countInc}>
-              +
+        <div className="food-info">
+          <span className="item-title">{food_name}</span>
+          <div>
+            <span className="price">₹{price} /-</span>
+            <div className="item-count">
+              <button className="decrease" onClick={countDec}>
+                -
+              </button>
+              <span className="count-value">{quantity}</span>
+              <button className="increase" onClick={countInc}>
+                +
+              </button>
+            </div>
+            <button className="cart-submit-button" onClick={addToCart}>
+              Buy
             </button>
           </div>
         </div>
-        <button onClick={addToCart}>Buy</button>
+      </div>
+      <div className="meter" style={{ display: isHover ? "block" : "none" }}>
+        <Calorie_Meter value={calories} goal={800} />
       </div>
     </div>
   );

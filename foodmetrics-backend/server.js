@@ -6,11 +6,29 @@ import FoodItem from "./models/food_items.js";
 import users from "./models/users.js";
 import Order from "./models/orders.js";
 import mongoose from "mongoose";
+import jwt from "jsonwebtoken";
 const app = express();
-app.use(cors({
-  origin: 'https://food-metrics.vercel.app'
-}));
+const allowedOrigins = [
+  "https://food-metrics.vercel.app",
+  "http://localhost:5173",
+];
 
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (
+        !origin ||
+        allowedOrigins.includes(origin) ||
+        /^https:\/\/food-metrics-[\w-]+\.vercel\.app$/.test(origin)
+      ) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS: " + origin));
+      }
+    },
+    credentials: true,
+  })
+);
 
 dotenv.config();
 app.use(express.json());
@@ -74,14 +92,36 @@ app.post("/register", async (req, res) => {
   }
 });
 app.post("/login", async (req, res) => {
+  const authHeader = req.headers.authorization;
+
+  if (authHeader && authHeader.startsWith("Bearer ")) {
+    const token = authHeader.split(" ")[1];
+
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      return res.status(400).json({ message: "User already logged in" });
+    } catch (err) {
+      console.error("JWT verification failed:", err.message);
+    }
+  }
+
   const { username, password } = req.body;
+
   try {
     const user = await users.findOne({ email: username, password });
     if (!user) {
       return res.status(401).json({ message: "No user found" });
     }
+
+    const ip =
+      req.ip || req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+    const token = jwt.sign({ id: user._id, ip }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+
     res.status(200).json({
       message: "Login successful",
+      token,
       user,
     });
   } catch (error) {
@@ -153,7 +193,6 @@ app.post("/calories-by-date", async (req, res) => {
     });
   }
 });
-// POST /calories-by-week
 app.post("/calories-by-week", async (req, res) => {
   const { orderIdsByWeek } = req.body;
   try {
@@ -216,11 +255,11 @@ app.post("/calories-by-month", async (req, res) => {
       result[month] = totalCalories;
     }
 
-    console.log("Calories sent to client:", result); // ✅ log here
+    console.log("Calories sent to client:", result);
 
     res.status(200).json(result);
   } catch (error) {
-    console.error("Server error:", error); // optional additional log
+    console.error("Server error:", error);
     res.status(500).json({
       message: "Error calculating monthly calories",
       error: error.message,

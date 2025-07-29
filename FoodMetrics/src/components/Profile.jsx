@@ -5,19 +5,44 @@ import Daily from "./Daily";
 import Weekly from "./Weekly";
 import Monthly from "./Monthly";
 import Yearly from "./Yearly";
+import { jwtDecode } from "jwt-decode";
 
 function Profile() {
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+
+    try {
+      const decoded = jwtDecode(token);
+      const currentTime = Date.now() / 1000;
+
+      if (decoded.exp < currentTime) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("name");
+        navigate("/login");
+      }
+    } catch (err) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("name");
+      navigate("/login");
+    }
+  }, []);
+
   const navigate = useNavigate();
   const [AnalysisActive, setAnalysis] = useState("daily");
   const name = localStorage.getItem("name");
-  const email = localStorage.getItem("email");
   return (
     <div className="profile-container">
       <button
         className="logout-btn"
         onClick={() => {
-          localStorage.removeItem("email");
           localStorage.removeItem("name");
+          localStorage.removeItem("email");
+          localStorage.removeItem("token");
           navigate("/login");
         }}
       >
@@ -43,10 +68,6 @@ function Profile() {
             {name}
             <i className="ri-user-3-fill"></i>
           </h2>
-          <p>
-            <i class="ri-mail-fill"></i>
-            {email}
-          </p>
         </div>
 
         <h2>Dashboard</h2>
